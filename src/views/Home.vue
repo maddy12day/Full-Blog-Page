@@ -1,12 +1,101 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <BlogPost :post="welcomeScreen" />
+    <BlogPost :post="post" v-for="(post, index) in sampleBlogPost" :key="index" />
+    <div class="blog-card-wrap">
+      <div class="container">
+        <h3>View more recent Blogs</h3>
+        <div class="blog-card">
+          <blogCard :post="post" v-for="(post, index) in sampleBlogCards" :key="index"/>
+        </div>
+      </div>
+    </div>
+    <div class="updates">
+      <div class="container">
+        <h2>Never miss a post. Register for your free account today.</h2>
+        <router-link class="router-button" to="#">Register for YourBlogs
+         <Arrow class="arrow arrow-light"/>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Arrow from '../assets/Icons/arrow-right-light.svg'
+import BlogPost from '../component/BlogPost.vue'
+import BlogCard from '../component/BlogCard.vue'
 export default {
   name: "Home",
-  components: {},
+  components: {BlogPost, BlogCard, Arrow},
+  data(){
+    return {
+      welcomeScreen:{
+        title:"Welcome!",
+        blogPost:"Weekly blog article with all things programing including HTML, CSS, JavaScript and more. Register yourself today to never miss out on hot blogs",
+        welcomeScreen:true,
+        photo:'coding',
+      },
+      sampleBlogPost:[{
+        title:"This is a Filler title!",
+        bloghtml:"This is a Filler blog post title",
+        blogCoverPhoto:"beautiful-stories",
+      },
+      {
+        title:"This is a Filler title!",
+        bloghtml:"This is a Filler blog post title",
+        blogCoverPhoto:"designed-for-everyone",
+      }],
+    }
+  },
+  computed:{
+    sampleBlogCards(){
+      return this.$store.state.sampleBlogCards;
+    }
+  }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.blog-card-wrap{
+  h3{
+    font-weight: 300;
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+}
+.updates{
+  .container{
+    padding: 100px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media(min-width: 800px){
+      padding: 125px 25px;
+      flex-direction: row;
+    }
+    .router-button{
+      display: flex;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      @media(min-width: 800px){
+        margin-left: auto;
+      }
+    }
+    h2{
+      font-weight: 300;
+      font-size: 32px;
+      max-width: 425px;
+      width: 100%;
+      text-align: center;
+      text-transform: uppercase;
+      @media(min-width: 800px){
+        text-align: initial;
+        font-size: 40px; 
+      }
+    }
+  }
+}
+</style>
