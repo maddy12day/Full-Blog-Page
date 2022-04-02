@@ -4,6 +4,10 @@
         <Loading v-if="loading"/>
         <div class="form-wrap">
             <form class="reset">
+                <p class="login-register">
+                    Back to 
+                    <router-link class="router-link" :to="{ name: 'Login' }">Login</router-link> page
+                </p>
                 <h2>Reset Password</h2>
 
                 <p>Forgot your password? Please enter your email to reset it</p>

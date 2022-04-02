@@ -9,8 +9,10 @@
 </template>
 
 <script>
-import navigation from './component/navigation.vue'
-import foot from './component/Footer.vue'
+import navigation from './component/navigation.vue';
+import foot from './component/Footer.vue';
+import firebase from "firebase/app";
+import "firebase/auth"; 
 export default {
   name: "app",
   components: {navigation, foot},
@@ -21,6 +23,7 @@ export default {
   },
   created() {
     this.checkRoute();
+    console.log(firebase.auth().currentUser);
   },
   mounted() {},
   methods: {
