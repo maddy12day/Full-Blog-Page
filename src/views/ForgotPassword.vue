@@ -1,6 +1,6 @@
 <template>
     <div class="reset-password">
-        <Modal v-if="modalActive" v-on:close-modal="closeModal" :modalMessage = modalMessage />
+        <Modal v-if="modalActive" v-on:close-modal="closeModal" :modalMessage = "modalMessage" />
         <Loading v-if="loading"/>
         <div class="form-wrap">
             <form class="reset">
@@ -17,7 +17,7 @@
                         <email class="icon"></email>
                     </div>
                 </div>
-                <button>Reset</button>
+                <button @click.prevent = "resetPassword">Reset</button>
                 <div class="angle"></div>
             </form>
             <div class="background"></div>
@@ -29,6 +29,8 @@
 import email from "../assets/Icons/envelope-regular.svg";
 import Loading from '../component/Loading.vue';
 import Modal from '../component/Modal.vue';
+import firebase from "firebase/app";
+import "firebase/auth";
     export default {
         name: "ForgotPassword",
         components:{email,Modal, Loading,},
@@ -36,7 +38,7 @@ import Modal from '../component/Modal.vue';
             return{
                 email:null,
                 modalActive:false,
-                modalMessage:"changed password",
+                modalMessage:"",
                 loading: null,
             }
         },
@@ -44,6 +46,19 @@ import Modal from '../component/Modal.vue';
             closeModal(){
                 this.modalActive = ! this.modalActive;
                 this.email = "";
+            },
+            resetPassword(){
+                this.loading = true;
+                firebase.auth().sendPasswordResetEmail(this.email).then(()=>{
+                    this.modalMessage = "You will recieve an email to reset your password on your registered email adderess";
+                    this.loading = false;
+                    this.modalActive = true;
+                }).catch(err =>{
+                    this.modalMessage = err.message;
+                    this.loading = false;
+                    this.modalActive = true;
+                })
+
             }
         }
     }
