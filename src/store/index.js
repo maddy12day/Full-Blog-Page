@@ -40,7 +40,11 @@ export default new Vuex.Store({
       state.profileUsername = doc.data().username;
     },
     setProfileInitials(state){
-      state.profileInitials = state.profileFirstName.match(/(\b\s)?/g).join("") + state.profileLastName.match(/(\b\s)?/g).join("");
+      console.log(state.profileFirstName)
+      console.log(state.profileLastName)
+      console.log(state.profileInitials)
+      state.profileInitials = (state.profileFirstName[0] + state.profileLastName[0]).toUpperCase();
+      return ;
     }
   },
   actions: {
@@ -49,7 +53,6 @@ export default new Vuex.Store({
       const dbResults = await dataBase.get();
       commit("setProfileInfo", dbResults);
       commit("setProfileInitials")
-      console.log(dbResults);
     }
   },
   modules: {
